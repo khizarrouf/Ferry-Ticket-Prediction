@@ -1,0 +1,69 @@
+data:
+  filepath: './Toronto Island Ferry Ticket Counts.csv'
+  timestamp_col: 'Timestamp'
+  id_col: '_id'
+  redemption_col: 'Redemption Count'
+  sales_col: 'Sales Count'
+
+outlier_detection:
+  contamination: 0.001
+
+features:
+  country: Canada
+  prov: "ON"
+  lag_days: [1, 7, 14]
+  rolling_windows: [7, 14]
+
+lightgbm_params:
+  objective: regression
+  metric: mae
+  verbosity: -1
+  seed: 42
+  learning_rate: 0.03
+  num_leaves: 20
+  max_depth: 4
+  min_data_in_leaf: 50
+  feature_fraction: 0.8
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l1: 0.5
+  lambda_l2: 0.5
+  min_gain_to_split: 0.2
+  num_boost_round: 3000
+  early_stopping_round: 50
+  
+lstm_params:
+  seq_len: 15
+  epochs: 50
+  batch_size: 32
+  lr: 0.05
+  verbose: False
+  hidden_dim: 16
+  num_layers: 2
+  dropout: 0.2
+  output_dim: 1
+
+features_to_plot:
+  - Redemption Count     
+  - Sales Count           
+
+drop_columns_lgbm:
+  - _id
+  - Sales Count          
+  - trend
+  - seasonal
+  - resid
+
+lstm_keep_columns:
+  - Redemption Count      
+  - is_weekend            
+  - is_holiday            
+  - day_of_week             
+  - redemption_lag_1d
+
+cross_validation:
+  n_splits: 4
+  test_size: 365
+
+
+
