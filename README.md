@@ -1,4 +1,4 @@
-# Ferry-Ticket-Prediction
+# Ferry_Ticket_Prediction
 
 ## Project Overview
 
